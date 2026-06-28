@@ -18,12 +18,12 @@ class Menu:
          pygame.mixer.music.play(-1)
          while True:
             self.window.blit(source=self.scale, dest=self.rect)
-            self.menu_text(50, 'Ice', C_YELLOW, ((WIN_WIDTH / 2), 100))
+            self.menu_text(45, 'Gummy', C_YELLOW, ((WIN_WIDTH / 2), 100))
             self.menu_text(60, 'Adventure',  C_YELLOW, ((WIN_WIDTH / 2), 140))
 
             for i in range(len(MENU_OPTION)):
                 if i == menu_option:
-                    self.menu_text(40, MENU_OPTION[i],  C_WHITE, ((WIN_WIDTH / 2), 250 + 50 * i))
+                    self.menu_text(40, MENU_OPTION[i],  C_BLACK, ((WIN_WIDTH / 2), 250 + 50 * i))
                 else:
                     self.menu_text(40, MENU_OPTION[i],  C_YELLOW, ((WIN_WIDTH / 2), 250 + 50 * i))
 
