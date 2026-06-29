@@ -17,6 +17,19 @@ class EntityFactory:
                 list_bg.append(Background('plataforma02Bg', (550, 310), (WIN_WIDTH / 5 , 100)))
                 list_bg.append(Background('plataforma03Bg', (400, 375), (50, 100)))
                 list_bg.append(Background('ponteBg', (200, 410), (WIN_WIDTH / 4, 8)))
-                
+                list_bg.append(Background('ArvoreBg', (50, 290), (100, 120)))
+                list_bg.append(Background('Block01Bg', (0, 220), (50, 50)))
+                list_bg.append(Background('Block02Bg', (50, 220), (50, 50)))
+                list_bg.append(Background('Block01Bg', (100, 220), (50, 50)))
+                list_bg.append(Background('Block02Bg', (150, 220), (50, 50)))
+                list_bg.append(Background('Block01Bg', (200, 220), (50, 50)))
+                list_bg.append(Background('Block02Bg', (250, 220), (50, 50)))
+
+                for i in range(0, 300, 50):
+                        list_bg.append(Background('Block03Bg', (i, 50), (50, 50)))
+                        
+                            
+                        
+                            
                
                 return list_bg
