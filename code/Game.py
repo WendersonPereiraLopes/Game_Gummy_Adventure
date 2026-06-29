@@ -2,6 +2,7 @@ import pygame
 
 from code.Menu import Menu
 from code.Level import Level
+from code.Control import Control
 from code.Const import WIN_WIDTH, WIN_HEIGHT, MENU_OPTION
 
 class Game:
@@ -24,6 +25,9 @@ class Game:
                 level.run()
             elif menu_return == MENU_OPTION[1]:
                 pass
+            elif menu_return == MENU_OPTION[2]:
+                control = Control(self.window)
+                control.run()
             else:
                 pygame.quit()
                 quit

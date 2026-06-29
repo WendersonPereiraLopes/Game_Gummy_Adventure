@@ -83,6 +83,7 @@ ENTITY_SCORE = {
 MENU_OPTION = (
                 'New Game',
                 'Score',
+                'Control',
                 'Exit'
 )
 
