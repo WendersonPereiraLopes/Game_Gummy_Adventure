@@ -1,7 +1,9 @@
 import pygame
+import sys
 
 from code.Menu import Menu
 from code.Level import Level
+from code.Score import Score
 from code.Control import Control
 from code.Const import WIN_WIDTH, WIN_HEIGHT, MENU_OPTION
 
@@ -24,12 +26,13 @@ class Game:
                 level = Level(self.window, 'level')
                 level.run()
             elif menu_return == MENU_OPTION[1]:
-                pass
+                score = Score(self.window)
+                score.run()
             elif menu_return == MENU_OPTION[2]:
                 control = Control(self.window)
                 control.run()
             else:
                 pygame.quit()
-                quit
+                sys.exit()
 
            
