@@ -4,8 +4,8 @@ import sys
 from pygame import Surface, Rect
 from pygame.font import Font
 from code.Menu import Menu
+from code.ProxyDB import ProxyDB
 from code.Const import WIN_WIDTH, WIN_HEIGHT, C_BLACK
-
 class Score:
 
     def __init__(self, window):
@@ -17,11 +17,18 @@ class Score:
     def run(self):
         pygame.mixer.music.load('asset/Score_end_gameSound.mp3')
         pygame.mixer.music.play(-1)
+        proxy_db = ProxyDB('DBscore.db')
+        list_score = proxy_db.retrive_top5()
+        proxy_db.close()
         while True:
             self.window.blit(source=self.scale, dest=self.rect)
-            self.score_text(50, 'Score',  C_BLACK, ((WIN_WIDTH / 2 ), 100))
+            self.score_text(50, 'TOP 5 SCORE',  C_BLACK, ((WIN_WIDTH / 2 ), 100))
+            y_offset = 0
+            for player_score in list_score:
+                texto_formatado = f"Score: {player_score[1]} | Data: {player_score[2]}"
+                self.score_text(30, texto_formatado, C_BLACK, (WIN_WIDTH / 2, 250 + y_offset))
+                y_offset += 40  # Adjust the gap between items
             pygame.display.flip()
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()  # Close Window

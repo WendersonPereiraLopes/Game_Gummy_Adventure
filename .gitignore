@@ -2,3 +2,4 @@ conceitos
 .venv
 code/__pycache__
 test.py
+DBscore.db
