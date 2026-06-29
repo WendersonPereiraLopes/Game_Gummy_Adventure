@@ -1,5 +1,6 @@
 from code.Background import Background
 from code.Player import Player
+from code.Enemy import Enemy
 from code.Const import WIN_WIDTH, WIN_HEIGHT
 
 
@@ -32,3 +33,5 @@ class EntityFactory:
                 return list_bg
             case 'Player':
                   return Player('player', (20,364), (50,50))
+            case 'Enemy':
+                  return Enemy('enemy', (WIN_WIDTH - 85,WIN_HEIGHT - 120), (80,80))

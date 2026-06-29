@@ -14,6 +14,7 @@ class Level:
         self.entity_list:list[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('LevelBg'))
         self.entity_list.append(EntityFactory.get_entity('Player'))
+        self.entity_list.append(EntityFactory.get_entity('Enemy'))
         
         
 
