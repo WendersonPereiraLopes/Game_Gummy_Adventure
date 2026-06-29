@@ -10,4 +10,6 @@ class Entity(ABC):
         self.rect = self.surf.get_rect(left=position[0], top=position[1])
         self.scale = pygame.transform.scale(self.surf, size=scale)
 
-        
+    @abstractmethod
+    def move(self):
+        pass   

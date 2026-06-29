@@ -1,4 +1,5 @@
 from code.Background import Background
+from code.Player import Player
 from code.Const import WIN_WIDTH, WIN_HEIGHT
 
 
@@ -27,9 +28,7 @@ class EntityFactory:
 
                 for i in range(0, 300, 50):
                         list_bg.append(Background('Block03Bg', (i, 50), (50, 50)))
-                        
-                            
-                        
-                            
-               
+    
                 return list_bg
+            case 'Player':
+                  return Player('player', (20,364), (50,50))

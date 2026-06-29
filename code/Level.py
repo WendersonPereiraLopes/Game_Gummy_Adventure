@@ -1,7 +1,9 @@
 import pygame.image
+import sys
 
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
+from code.Player import Player
 from code.Const import WIN_HEIGHT, WIN_WIDTH
 
 class Level:
@@ -11,6 +13,7 @@ class Level:
         self.name = name
         self.entity_list:list[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('LevelBg'))
+        self.entity_list.append(EntityFactory.get_entity('Player'))
         
         
 
@@ -19,12 +22,13 @@ class Level:
         pygame.mixer.music.play(-1)
         while True:
             for ent in self.entity_list:
-                self.window.blit(source=ent.scale, dest=ent.rect)    
+                self.window.blit(source=ent.scale, dest=ent.rect) 
+                ent.move()
             pygame.display.flip()
-
-
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()  # Close Window
-                    quit()
+                    sys.exit()
+            
+            pygame.display.flip()
