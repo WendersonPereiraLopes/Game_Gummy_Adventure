@@ -33,5 +33,7 @@ class EntityFactory:
                 return list_bg
             case 'Player':
                   return Player('player', (20,364), (50,50))
-            case 'Enemy':
-                  return Enemy('enemy', (WIN_WIDTH,WIN_HEIGHT - 120), (80,80))
+            case 'Enemy1':
+                  return Enemy('enemy1', (WIN_WIDTH,WIN_HEIGHT - 120), (80,80))
+            case 'Enemy2':
+                  return Enemy('enemy2', (WIN_WIDTH, WIN_HEIGHT / 4 + 20), (60,60))
