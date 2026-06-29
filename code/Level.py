@@ -2,13 +2,16 @@ import pygame.image
 import sys
 import random
 
+from datetime import datetime
 from pygame import Surface, Rect
 from pygame.font import Font
+from code.Score import Score
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
 from code.EntityMediator import EntityMediator
 from code.Player import Player
 from code.Enemy import Enemy
+from code.ProxyDB import ProxyDB
 from code.Const import  WIN_HEIGHT, WIN_WIDTH, C_WHITE, EVENT_ENEMY, SPAWN_TIMER
 
 class Level:
@@ -16,7 +19,7 @@ class Level:
     def __init__(self, window, name):
         self.window = window
         self.name = name
-        self.timeout = 60000
+        self.timeout = 1000
         self.entity_list:list[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('LevelBg'))
         self.entity_list.append(EntityFactory.get_entity('Player'))
@@ -29,6 +32,13 @@ class Level:
         clock = pygame.time.Clock()
         while True:
             clock.tick(60)
+              #validation de time for end game 
+            if self.timeout > 0:
+                self.timeout -= 1
+
+                if self.timeout == 0:
+                    self.game_over = True
+
             for ent in self.entity_list:
                 self.window.blit(source=ent.scale, dest=ent.rect) 
                 ent.move()
@@ -38,6 +48,16 @@ class Level:
                         self.entity_list.append(shoot) 
                 if ent.name == 'player':
                     self.level_text(14, f'Health: {ent.health} | Score: {ent.score}', C_WHITE, (73, 25))
+
+                    if self.timeout == 0 and self.game_over:
+                        self.data_atual = datetime.now().strftime("%d/%m/%Y %H:%M")
+                        dados_score =[ent.score, self.data_atual]
+                        proxy_db = ProxyDB('DBscore.db')
+                        proxy_db.save_data(dados_score)
+                        proxy_db.close()
+                        self.game_over = False 
+                        return Score(self.window).run()
+                        
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -48,11 +68,7 @@ class Level:
                     choice = random.choice(('Enemy1', 'Enemy2'))
                     self.entity_list.append(EntityFactory.get_entity(choice))
             
-            #validation de time for end game 
-            if self.timeout > 0:
-                 self.timeout -= 1
-
-                    
+            
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000 :.1f}', C_WHITE, (70, 10))
             self.level_text(14, f'FPS: {clock.get_fps() :.0f}', C_WHITE, (30, WIN_HEIGHT - 35))
             self.level_text(14, f'Entidades: {len(self.entity_list)}', C_WHITE, (50, WIN_HEIGHT - 20))
