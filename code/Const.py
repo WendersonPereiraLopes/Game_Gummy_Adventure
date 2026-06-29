@@ -9,6 +9,7 @@ C_YELLOW = (255,255, 0)
 EVENT_ENEMY = pygame.USEREVENT + 1
 ENTITY_SPEED = {
     'player': 3,
+    'player_shot': 2,
     'enemy1': 1,
     'enemy2': 2,
     'missel_enemy1': 3,
@@ -18,7 +19,8 @@ ENTITY_SPEED = {
 }
 ENTITY_SHOT_DELAY ={
     'enemy1': 50,
-    'enemy2': 100
+    'enemy2': 100,
+    'player': 20
 }
 
 
@@ -31,6 +33,7 @@ MENU_OPTION = (
 
 # S
 SPAWN_TIMER = 4000
+
 # W
 WIN_WIDTH = 800
 WIN_HEIGHT = 456
