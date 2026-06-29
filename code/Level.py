@@ -6,6 +6,7 @@ from pygame import Surface, Rect
 from pygame.font import Font
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
+# from code.EntityMediator import EntityMediator
 from code.Player import Player
 from code.Enemy import Enemy
 from code.Const import WIN_HEIGHT, WIN_WIDTH, C_WHITE, EVENT_ENEMY, SPAWN_TIMER
@@ -53,6 +54,7 @@ class Level:
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000 :.1f}', C_WHITE, (70, 10))
             self.level_text(14, f'FPS: {clock.get_fps() :.0f}', C_WHITE, (30, WIN_HEIGHT - 35))
             pygame.display.flip()
+            
 
     def level_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
             text_font: Font = pygame.font.SysFont(name='Roboto', size=text_size)
