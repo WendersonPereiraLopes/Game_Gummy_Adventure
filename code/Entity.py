@@ -2,6 +2,8 @@ import pygame.image
 
 from abc import ABC, abstractmethod
 
+from code.Const import ENTITY_DAMEGE, ENTITY_HEALTH, ENTITY_SCORE
+
 class Entity(ABC):
     
     def __init__(self, name:str, position:tuple, scale:tuple):
@@ -9,7 +11,11 @@ class Entity(ABC):
         self.surf = pygame.image.load('asset/' + name + '.png') 
         self.rect = self.surf.get_rect(left=position[0], top=position[1])
         self.scale = pygame.transform.scale(self.surf, size=scale)
-
+        self.speed = 0
+        self.health = ENTITY_HEALTH[self.name]
+        self.damage = ENTITY_DAMEGE[self.name]
+        self.score = ENTITY_SCORE[self.name]
+        self.last_dmg = 'None'
     @abstractmethod
     def move(self):
         pass   

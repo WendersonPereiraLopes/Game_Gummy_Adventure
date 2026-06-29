@@ -6,10 +6,10 @@ from pygame import Surface, Rect
 from pygame.font import Font
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
-# from code.EntityMediator import EntityMediator
+from code.EntityMediator import EntityMediator
 from code.Player import Player
 from code.Enemy import Enemy
-from code.Const import WIN_HEIGHT, WIN_WIDTH, C_WHITE, EVENT_ENEMY, SPAWN_TIMER
+from code.Const import  WIN_HEIGHT, WIN_WIDTH, C_WHITE, EVENT_ENEMY, SPAWN_TIMER
 
 class Level:
 
@@ -36,6 +36,8 @@ class Level:
                    shoot = ent.shoot()
                    if shoot is not None:
                         self.entity_list.append(shoot) 
+                if ent.name == 'player':
+                    self.level_text(14, f'Health: {ent.health} | Score: {ent.score}', C_WHITE, (73, 25))
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -53,8 +55,10 @@ class Level:
                     
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000 :.1f}', C_WHITE, (70, 10))
             self.level_text(14, f'FPS: {clock.get_fps() :.0f}', C_WHITE, (30, WIN_HEIGHT - 35))
+            self.level_text(14, f'Entidades: {len(self.entity_list)}', C_WHITE, (50, WIN_HEIGHT - 20))
             pygame.display.flip()
-            
+            EntityMediator.verify_collision(entity_list=self.entity_list)
+            EntityMediator.verify_health(entity_list=self.entity_list)
 
     def level_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
             text_font: Font = pygame.font.SysFont(name='Roboto', size=text_size)
