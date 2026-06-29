@@ -34,4 +34,4 @@ class EntityFactory:
             case 'Player':
                   return Player('player', (20,364), (50,50))
             case 'Enemy':
-                  return Enemy('enemy', (WIN_WIDTH - 85,WIN_HEIGHT - 120), (80,80))
+                  return Enemy('enemy', (WIN_WIDTH,WIN_HEIGHT - 120), (80,80))
