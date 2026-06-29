@@ -7,6 +7,7 @@ from pygame import Surface, Rect
 from pygame.font import Font
 from code.Score import Score
 from code.Entity import Entity
+from code.GameOver import GameOver
 from code.EntityFactory import EntityFactory
 from code.EntityMediator import EntityMediator
 from code.Player import Player
@@ -19,7 +20,7 @@ class Level:
     def __init__(self, window, name):
         self.window = window
         self.name = name
-        self.timeout = 1000
+        self.timeout = 10000
         self.entity_list:list[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('LevelBg'))
         self.entity_list.append(EntityFactory.get_entity('Player'))
@@ -35,29 +36,46 @@ class Level:
               #validation de time for end game 
             if self.timeout > 0:
                 self.timeout -= 1
-
                 if self.timeout == 0:
                     self.game_over = True
 
+            # 1. Buscamos o jogador na lista ANTES de rodar o loop de desenho
+            player_encontrado = None
+            for ent in self.entity_list:
+                if ent.name == 'player':
+                    player_encontrado = ent
+                    break
+
+            # 2. SE O JOGADOR SUMIU DA LISTA OU A VIDA DELE ZEROU -> GAME OVER DIRETO
+            if player_encontrado is None or player_encontrado.health <= 0:
+                return GameOver(self.window).run()
+
+            # 3. Se ele ainda está vivo, o jogo continua normalmente:
             for ent in self.entity_list:
                 self.window.blit(source=ent.scale, dest=ent.rect) 
                 ent.move()
+    
                 if isinstance(ent, (Player, Enemy)):
-                   shoot = ent.shoot()
-                   if shoot is not None:
+                    shoot = ent.shoot()
+                    if shoot is not None:
                         self.entity_list.append(shoot) 
-                if ent.name == 'player':
-                    self.level_text(14, f'Health: {ent.health} | Score: {ent.score}', C_WHITE, (73, 25))
+            
+                    if ent.name == 'player':
+                        self.level_text(14, f'Health: {ent.health} | Score: {ent.score}', C_WHITE, (73, 25))
 
-                    if self.timeout == 0 and self.game_over:
-                        self.data_atual = datetime.now().strftime("%d/%m/%Y %H:%M")
-                        dados_score =[ent.score, self.data_atual]
-                        proxy_db = ProxyDB('DBscore.db')
-                        proxy_db.save_data(dados_score)
-                        proxy_db.close()
-                        self.game_over = False 
-                        return Score(self.window).run()
-                        
+            # 4. CAMINHO DO TEMPO (Vitória/Score) - Só roda se o jogador não morreu acima
+            if self.timeout == 0 and self.game_over:
+                self.data_atual = datetime.now().strftime("%d/%m/%Y %H:%M")
+                dados_score = [player_encontrado.score, self.data_atual]
+                
+                proxy_db = ProxyDB('DBscore.db')
+                proxy_db.save_data(dados_score)
+                proxy_db.close()
+                
+                self.game_over = False 
+                return Score(self.window).run()
+
+                     
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -69,7 +87,9 @@ class Level:
                     self.entity_list.append(EntityFactory.get_entity(choice))
             
             
-            self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000 :.1f}', C_WHITE, (70, 10))
+            
+            
+            self.level_text(14, f'{self.name} - Time: {self.timeout / 1000 :.1f}', C_WHITE, (70, 10))
             self.level_text(14, f'FPS: {clock.get_fps() :.0f}', C_WHITE, (30, WIN_HEIGHT - 35))
             self.level_text(14, f'Entidades: {len(self.entity_list)}', C_WHITE, (50, WIN_HEIGHT - 20))
             pygame.display.flip()
