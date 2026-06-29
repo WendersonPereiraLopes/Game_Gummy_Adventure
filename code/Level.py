@@ -11,14 +11,19 @@ class Level:
         self.name = name
         self.entity_list:list[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('LevelBg'))
+        
+        
 
     def run(self):
         pygame.mixer.music.load('asset/LevelSound.mp3')
         pygame.mixer.music.play(-1)
+        EntityFactory.get_entity('plataforma01Bg')
         while True:
-          for ent in self.entity_list:
-            self.window.blit(source=ent.scale, dest=ent.rect)
+            for ent in self.entity_list:
+                self.window.blit(source=ent.scale, dest=ent.rect)    
             pygame.display.flip()
+
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

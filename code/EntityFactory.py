@@ -10,5 +10,6 @@ class EntityFactory:
             case 'LevelBg':
                 list_bg = []
                 list_bg.append(Background('LevelBg', (0,0), (WIN_WIDTH, WIN_HEIGHT)))
+                list_bg.append(Background('plataforma01Bg', (0, 410), (WIN_WIDTH,50)))
 
                 return list_bg
