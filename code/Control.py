@@ -18,11 +18,12 @@ class Control:
         while True:
             self.window.blit(source=self.scale, dest=self.rect)
             self.control_text(60, 'Button',  C_BLACK, ((WIN_WIDTH / 2 ), 100))
-            self.control_text(30, 'Esc   |  Back',  C_BLACK, ((WIN_WIDTH / 2), 200))
-            self.control_text(30, '-->   |  Rigth',  C_BLACK, ((WIN_WIDTH / 2), 250))
-            self.control_text(30, '<--   |  Left',  C_BLACK, ((WIN_WIDTH / 2), 300))
-            self.control_text(30, 'Return   |  Enter',  C_BLACK, ((WIN_WIDTH / 2), 350))
-            self.control_text(30, 'Jump  |  Space',  C_BLACK, ((WIN_WIDTH / 2), 400))
+            self.control_text(30, 'Esc   |  Back',  C_BLACK, ((WIN_WIDTH / 2), 150 + 10))
+            self.control_text(30, '-->   |  Rigth',  C_BLACK, ((WIN_WIDTH / 2), 200 + 10))
+            self.control_text(30, '<--   |  Left',  C_BLACK, ((WIN_WIDTH / 2), 250 + 10))
+            self.control_text(30, 'Return   |  Enter',  C_BLACK, ((WIN_WIDTH / 2), 300 + 10))
+            self.control_text(30, 'Jump  |  Space',  C_BLACK, ((WIN_WIDTH / 2), 350 + 10))
+            self.control_text(30, 'Shoot  |  CTRL Left',  C_BLACK, ((WIN_WIDTH / 2), 400  + 10))
 
 
             pygame.display.flip()
